@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fênix | RAT V7.4</title>
+<title>Fênix | RAT V7.5</title>
 <!-- PWA -->
 <meta name="application-name" content="Fênix RAT">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fênix RAT">
 <meta name="theme-color" content="#0b0d14" id="metaThemeColor">
-<meta name="description" content="Registro de Atendimento Técnico · Gestão de Campo V7.4">
+<meta name="description" content="Registro de Atendimento Técnico · Gestão de Campo V7.5">
 <link rel="manifest" id="pwaManifest">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,9 +33,9 @@
 (function(){
   const LOGO_B64='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjU2IiByPSIyNTYiIGZpbGw9IiMxYTRkOGMiLz48cGF0aCBkPSJNMTUzIDM3MEwyNTYgMTI0TDM1OSAzNzBIMjc2TDI1NiAyODZMMjM2IDM3MFoiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii45NSIvPjwvc3ZnPg==';
   const manifest={
-    name:'Fênix RAT — Gestão de Campo v7.4',
+    name:'Fênix RAT — Gestão de Campo v7.5',
     short_name:'Fênix RAT',
-    description:'Registro de Atendimento Técnico V7.4',
+    description:'Registro de Atendimento Técnico V7.5',
     start_url:'.',
     display:'standalone',
     background_color:'#0b0d14',
@@ -480,6 +480,22 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 .btn-google{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:14px 20px;background:#fff;color:#1f2937;border:none;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .btn-google:hover{background:#f3f4f6;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .btn-google svg{width:20px;height:20px;flex-shrink:0}
+/* ── LOGIN E-MAIL/SENHA v7.5 ── */
+.auth-tabs{display:flex;gap:4px;background:var(--s2);border-radius:9px;padding:3px;margin-bottom:14px;width:100%}
+.auth-tab{flex:1;background:none;border:none;padding:8px;border-radius:7px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.18s;font-family:var(--sans)}
+.auth-tab.active{background:var(--blue);color:#fff}
+.auth-form{display:flex;flex-direction:column;gap:9px;width:100%}
+.auth-inp{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:11px 14px;font-size:13px;color:var(--text);font-family:var(--sans);width:100%}
+.auth-inp:focus{outline:none;border-color:var(--blue)}
+.auth-err{font-size:11px;color:var(--red);min-height:0;display:none}
+.auth-err.show{display:block}
+.btn-pwd{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 20px;background:var(--blue);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-pwd:hover{background:#1d4ed8}
+.btn-pwd:disabled{opacity:.6;cursor:wait}
+.auth-link{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--sans);text-decoration:underline;padding:2px}
+.auth-link:hover{color:var(--blue)}
+.auth-divider{display:flex;align-items:center;gap:10px;width:100%;margin:14px 0;color:var(--muted);font-size:10px}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .auth-footer{margin-top:20px;font-size:11px;color:var(--muted);line-height:1.6}
 .auth-loading{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;margin-top:16px}
 .auth-spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
@@ -651,7 +667,31 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   <div class="auth-card">
     <div class="auth-logo"><img id="authLogoImg" src="" alt="Fênix"></div>
     <div class="auth-title">Fênix | <span>RAT</span></div>
-    <div class="auth-sub">Registro de Atendimento Técnico<br>Gestão de Campo V7.4 · Acesso restrito</div>
+    <div class="auth-sub">Registro de Atendimento Técnico<br>Gestão de Campo V7.5 · Acesso restrito</div>
+
+    <!-- LOGIN POR E-MAIL/SENHA -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="atLogin" onclick="swAuthTab('login')">Entrar</button>
+      <button class="auth-tab" id="atRegister" onclick="swAuthTab('register')">Criar conta</button>
+    </div>
+    <form id="formLogin" class="auth-form" onsubmit="return false">
+      <input type="email" id="loginEmail" class="auth-inp" placeholder="E-mail" autocomplete="username" required>
+      <input type="password" id="loginPass" class="auth-inp" placeholder="Senha" autocomplete="current-password" required>
+      <div id="loginErr" class="auth-err"></div>
+      <button type="button" class="btn-pwd" onclick="loginEmailPass()" id="btnLoginPwd"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+      <button type="button" class="auth-link" onclick="resetPassword()">Esqueci minha senha</button>
+    </form>
+    <form id="formRegister" class="auth-form" style="display:none" onsubmit="return false">
+      <input type="text" id="regNome" class="auth-inp" placeholder="Nome completo" autocomplete="name" required>
+      <input type="email" id="regEmail" class="auth-inp" placeholder="E-mail" autocomplete="username" required>
+      <input type="password" id="regPass" class="auth-inp" placeholder="Senha (mín. 6 caracteres)" autocomplete="new-password" required>
+      <div id="regErr" class="auth-err"></div>
+      <button type="button" class="btn-pwd" onclick="registerEmailPass()" id="btnRegPwd"><i class="fas fa-user-plus"></i> Criar conta</button>
+      <div style="font-size:9px;color:var(--muted);text-align:center;line-height:1.5">Após criar a conta, aguarde aprovação de um administrador.</div>
+    </form>
+
+    <div class="auth-divider"><span>ou</span></div>
+
     <button class="btn-google" onclick="loginGoogle()" id="btnGoogle">
       <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
       Entrar com Google
@@ -668,7 +708,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 <div class="header">
   <div class="header-left">
     <div class="header-logo"><img id="logoImg" src="" alt="Fênix"></div>
-    <div><div class="htitle">Fênix | <span>RAT</span></div><div class="hsub">Registro de Atendimento Técnico · <span style="color:var(--blue);font-family:var(--mono)">v7.4</span></div></div>
+    <div><div class="htitle">Fênix | <span>RAT</span></div><div class="hsub">Registro de Atendimento Técnico · <span style="color:var(--blue);font-family:var(--mono)">v7.5</span></div></div>
   </div>
   <div class="header-right">
     <div class="hdate" id="hdate"></div>
@@ -2456,7 +2496,7 @@ function printFicha(tp,id){
   const rows=(fd[tp]||[]).filter(([,v])=>v&&v.trim()).map(([k,v],i)=>`<div class="pfc ${i%2===1?'':''}"><div class="pfcl">${k}</div><div class="pfcv">${v}</div></div>`).join('');
   const fotoH=(tp==='equ'&&rec['fdata'])?`<img src="${rec['fdata']}" alt="" style="width:64px;height:64px;border-radius:8px;object-fit:cover;border:2px solid var(--border);margin-left:10px">`:'';
   const nd=new Date().toLocaleDateString('pt-BR');
-  document.getElementById('prCon').innerHTML=`<div class="pfh"><div><div class="pflogo">Fênix | <span>RAT</span></div><div class="pftype">${titles[tp]}</div></div>${fotoH}<div class="pfmeta"><div>Emitido em ${nd}</div><div style="color:var(--blue);font-family:var(--mono);font-size:10px;margin-top:3px">ID: ${id}</div></div></div><div class="pfgrid">${rows||'<div class="pfc" style="grid-column:1/-1"><div class="pfcl">Aviso</div><div class="pfcv">Nenhum campo preenchido.</div></div>'}</div><div class="pfsig"><div class="pfsl">Responsável pelo Cadastro</div><div class="pfsl">Aprovação / Validação</div></div><div class="pffoot"><span>Fênix Soluções Tecnológicas · RAT V7.4</span><span>${nd}</span></div>`;
+  document.getElementById('prCon').innerHTML=`<div class="pfh"><div><div class="pflogo">Fênix | <span>RAT</span></div><div class="pftype">${titles[tp]}</div></div>${fotoH}<div class="pfmeta"><div>Emitido em ${nd}</div><div style="color:var(--blue);font-family:var(--mono);font-size:10px;margin-top:3px">ID: ${id}</div></div></div><div class="pfgrid">${rows||'<div class="pfc" style="grid-column:1/-1"><div class="pfcl">Aviso</div><div class="pfcv">Nenhum campo preenchido.</div></div>'}</div><div class="pfsig"><div class="pfsl">Responsável pelo Cadastro</div><div class="pfsl">Aprovação / Validação</div></div><div class="pffoot"><span>Fênix Soluções Tecnológicas · RAT V7.5</span><span>${nd}</span></div>`;
   document.getElementById('prO').classList.add('open');
 }
 function closePrint(){document.getElementById('prO').classList.remove('open');}
@@ -2502,7 +2542,7 @@ function gerarPDF(idx){
     doc.setTextColor(...C.w);doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text('F',mg+8.5,22.5);
   }
   doc.setTextColor(...C.tx);doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text(empNome,mg+28,13);
-  doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(...C.mu);doc.text('Registro de Atendimento Técnico · V7.4',mg+28,19);
+  doc.setFontSize(7);doc.setFont('helvetica','normal');doc.setTextColor(...C.mu);doc.text('Registro de Atendimento Técnico · V7.5',mg+28,19);
   doc.setTextColor(...C.bl);doc.setFontSize(9);doc.setFont('helvetica','bold');doc.text(a.os,W-mg,13,{align:'right'});
   doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(...C.mu);doc.text('Emitido: '+new Date().toLocaleDateString('pt-BR'),W-mg,19,{align:'right'});
   y=42;
@@ -3527,6 +3567,84 @@ function imprimirLista(){
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   🔑 LOGIN POR E-MAIL/SENHA  v7.5
+   Alternativa ao Google — mais previsível, sem depender de
+   popup/redirect, cookies de terceiros ou config de OAuth externa.
+═══════════════════════════════════════════════════════════════ */
+function swAuthTab(tab){
+  document.getElementById('atLogin').classList.toggle('active',tab==='login');
+  document.getElementById('atRegister').classList.toggle('active',tab==='register');
+  document.getElementById('formLogin').style.display=tab==='login'?'flex':'none';
+  document.getElementById('formRegister').style.display=tab==='register'?'flex':'none';
+  document.getElementById('loginErr').classList.remove('show');
+  document.getElementById('regErr').classList.remove('show');
+}
+function showAuthErr(id,msg){
+  const el=document.getElementById(id);
+  el.textContent=msg;el.classList.add('show');
+}
+function authErrMsg(code){
+  const map={
+    'auth/invalid-email':'E-mail inválido.',
+    'auth/user-not-found':'Usuário não encontrado.',
+    'auth/wrong-password':'Senha incorreta.',
+    'auth/invalid-credential':'E-mail ou senha incorretos.',
+    'auth/email-already-in-use':'Este e-mail já está cadastrado.',
+    'auth/weak-password':'Senha muito fraca (mínimo 6 caracteres).',
+    'auth/too-many-requests':'Muitas tentativas. Aguarde alguns minutos.',
+    'auth/network-request-failed':'Falha de rede. Verifique sua internet.',
+  };
+  return map[code]||'Erro ao autenticar. Tente novamente.';
+}
+async function loginEmailPass(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const pass=document.getElementById('loginPass').value;
+  document.getElementById('loginErr').classList.remove('show');
+  if(!email||!pass){showAuthErr('loginErr','Preencha e-mail e senha.');return;}
+  const btn=document.getElementById('btnLoginPwd');
+  const old=btn.innerHTML;btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Entrando…';
+  try{
+    await fbAuth.signInWithEmailAndPassword(email,pass);
+    // onAuthStateChanged cuida do resto
+  }catch(e){
+    showAuthErr('loginErr',authErrMsg(e.code));
+  }finally{
+    btn.disabled=false;btn.innerHTML=old;
+  }
+}
+async function registerEmailPass(){
+  const nome=document.getElementById('regNome').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const pass=document.getElementById('regPass').value;
+  document.getElementById('regErr').classList.remove('show');
+  if(!nome||!email||!pass){showAuthErr('regErr','Preencha todos os campos.');return;}
+  if(pass.length<6){showAuthErr('regErr','Senha deve ter no mínimo 6 caracteres.');return;}
+  const btn=document.getElementById('btnRegPwd');
+  const old=btn.innerHTML;btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Criando conta…';
+  try{
+    const cred=await fbAuth.createUserWithEmailAndPassword(email,pass);
+    await cred.user.updateProfile({displayName:nome});
+    // onAuthStateChanged cuida do resto (cria doc pendente em fenix_usuarios)
+    toast('✅ Conta criada! Aguarde aprovação de um administrador.','success',6000);
+  }catch(e){
+    showAuthErr('regErr',authErrMsg(e.code));
+  }finally{
+    btn.disabled=false;btn.innerHTML=old;
+  }
+}
+async function resetPassword(){
+  const email=document.getElementById('loginEmail').value.trim();
+  if(!email){showAuthErr('loginErr','Digite seu e-mail acima primeiro, depois clique em "Esqueci minha senha".');return;}
+  try{
+    await fbAuth.sendPasswordResetEmail(email);
+    toast('📧 E-mail de redefinição enviado para '+email,'success',6000);
+  }catch(e){
+    showAuthErr('loginErr',authErrMsg(e.code));
+  }
+}
+// logoutUser() já está definida mais acima, próxima ao restante das funções de auth.
+
+/* ═══════════════════════════════════════════════════════════════
    👥 SISTEMA MULTIUSUÁRIO  v7.1
    Roles: superadmin | admin | tecnico | viewer
    Firestore collection: fenix_usuarios/{uid}
@@ -3864,10 +3982,10 @@ window.swMain=function(page,btn){
 };
 
 /* ═══════════════════════════════════════════════════════════════
-   🏷️ VERSÃO v7.4 — DOMContentLoaded
+   🏷️ VERSÃO v7.5 — DOMContentLoaded
 ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('[data-version]').forEach(el=>el.textContent='v7.4');
+  document.querySelectorAll('[data-version]').forEach(el=>el.textContent='v7.5');
   buildCharts();
   loadLastPage();
   buildNotifs();
@@ -3892,8 +4010,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
   },1800);
 });
-/* ═══ SW v7.4 ═══ */
-const CACHE_VER='fenix-rat-v74';
+/* ═══ SW v7.5 ═══ */
+const CACHE_VER='fenix-rat-v75';
 </script>
 </body>
 </html>
